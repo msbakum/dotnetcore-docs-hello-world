@@ -53,7 +53,7 @@ jobs:
         with:
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_E4F9FB7B7C6542AFBC9CBD0D90163919 }}
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_53DFFC2547D849C4937D1CD93E98E06E }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_F2BADA6F9BB3404C9B43A03CCB0216DD 
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_F2BADA6F9BB3404C9B43A03CCB0216DD }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
@@ -61,3 +61,4 @@ jobs:
         with:
           app-name: 'clipchampaiwebclientpoc'
           package: ./myapp
+          slot-name: 'Production'
