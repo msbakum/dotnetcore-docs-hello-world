@@ -25,13 +25,16 @@ jobs:
         run: dotnet build --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o myapp
+        run: dotnet publish --configuration Release --output ./myapp
+
+      - name: List published files
+        run: dir ./myapp
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: dotnet-app
-          path: myapp
+          path: ./myapp
 
   deploy:
     runs-on: windows-latest
@@ -61,4 +64,4 @@ jobs:
         with:
           app-name: 'clipchampaiwebclientpoc'
           slot-name: 'Production'
-          package: myapp
+          package: ./myapp
