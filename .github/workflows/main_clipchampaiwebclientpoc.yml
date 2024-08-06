@@ -24,19 +24,19 @@ jobs:
       - name: Dotnet publish
         id: publish
         run: |
-          dotnet publish --configuration Release --output ${{ runner.temp }}/myapp
-          echo "Published to: ${{ runner.temp }}/myapp"
+          dotnet publish --configuration Release --output ${{ runner.temp }}
+          echo "Published to: ${{ runner.temp }}"
 
       - name: Print contents of publish directory
         run: |
-          echo "Listing contents of ${{ runner.temp }}/myapp:"
-          dir ${{ runner.temp }}/myapp || echo "Directory ${{ runner.temp }}/myapp does not exist."
+          echo "Listing contents of ${{ runner.temp }}:"
+          dir ${{ runner.temp }} || echo "Directory ${{ runner.temp }} does not exist."
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: dotnet-app
-          path: ${{ runner.temp }}/myapp
+          path: ${{ runner.temp }}
 
   deploy:
     runs-on: windows-latest
@@ -71,4 +71,4 @@ jobs:
         with:
           app-name: 'clipchampaiwebclientpoc'
           slot-name: 'Production'
-          package: ${{ runner.temp }}/myapp
+          package: ${{ runner.temp }}
