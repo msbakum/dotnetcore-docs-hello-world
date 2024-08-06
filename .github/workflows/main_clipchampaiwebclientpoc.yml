@@ -75,4 +75,4 @@ jobs:
         with:
           app-name: 'clipchampaiwebclientpoc'
           slot-name: 'Production'
-          package: D:\a\dotnetcore-docs-hello-world\dotnetcore-docs-hello-world\myapp
+          package: D:\a\dotnetcore-docs-hello-world\dotnetcore-docs-hello-world
