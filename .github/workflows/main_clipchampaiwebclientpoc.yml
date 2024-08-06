@@ -21,11 +21,18 @@ jobs:
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
-      - name: dotnet publish
+      - name: Dotnet publish
         run: dotnet publish --configuration Release --output ./myapp
 
+      - name: List contents of workspace before upload
+        run: |
+          echo "Listing contents before upload:"
+          dir
+
       - name: List published files
-        run: dir ./myapp
+        run: |
+          echo "Listing contents of ./myapp:"
+          dir ./myapp || echo "Directory ./myapp does not exist."
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -49,7 +56,9 @@ jobs:
           name: dotnet-app
       
       - name: List downloaded files
-        run: dir ./myapp
+        run: |
+          echo "Listing contents of ./myapp:"
+          dir ./myapp || echo "Directory ./myapp does not exist."
 
       - name: Login to Azure
         uses: azure/login@v2
