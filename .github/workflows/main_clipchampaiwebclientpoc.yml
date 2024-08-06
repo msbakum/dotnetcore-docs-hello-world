@@ -21,24 +21,26 @@ jobs:
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
-      - name: Dotnet publish
-        run: dotnet publish --configuration Release --output ./myapp
-
-      - name: List contents of workspace before upload
+      - name: Print current directory
         run: |
-          echo "Listing contents before upload:"
+          echo "Current directory:"
+          pwd
+          echo "Listing contents:"
           dir
 
-      - name: List published files
+      - name: Dotnet publish
+        run: dotnet publish --configuration Release --output D:\a\dotnetcore-docs-hello-world\dotnetcore-docs-hello-world\myapp
+
+      - name: Print contents of publish directory
         run: |
-          echo "Listing contents of ./myapp:"
-          dir ./myapp || echo "Directory ./myapp does not exist."
+          echo "Listing contents of D:\\a\\dotnetcore-docs-hello-world\\dotnetcore-docs-hello-world\\myapp:"
+          dir D:\a\dotnetcore-docs-hello-world\dotnetcore-docs-hello-world\myapp || echo "Directory D:\\a\\dotnetcore-docs-hello-world\\dotnetcore-docs-hello-world\\myapp does not exist."
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: dotnet-app
-          path: ./myapp
+          path: D:\a\dotnetcore-docs-hello-world\dotnetcore-docs-hello-world\myapp
 
   deploy:
     runs-on: windows-latest
@@ -54,11 +56,11 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: dotnet-app
-      
-      - name: List downloaded files
+
+      - name: Print contents of artifact directory
         run: |
-          echo "Listing contents of ./myapp:"
-          dir ./myapp || echo "Directory ./myapp does not exist."
+          echo "Listing contents of artifact directory:"
+          dir . || echo "Directory does not exist."
 
       - name: Login to Azure
         uses: azure/login@v2
@@ -73,4 +75,4 @@ jobs:
         with:
           app-name: 'clipchampaiwebclientpoc'
           slot-name: 'Production'
-          package: ./myapp
+          package: D:\a\dotnetcore-docs-hello-world\dotnetcore-docs-hello-world\myapp
