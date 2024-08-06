@@ -21,26 +21,22 @@ jobs:
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
-      - name: Print current directory
-        run: |
-          echo "Current directory:"
-          pwd
-          echo "Listing contents:"
-          dir
-
       - name: Dotnet publish
-        run: dotnet publish --configuration Release --output D:\a\dotnetcore-docs-hello-world\dotnetcore-docs-hello-world\myapp
+        id: publish
+        run: |
+          dotnet publish --configuration Release --output ${{ runner.temp }}/myapp
+          echo "Published to: ${{ runner.temp }}/myapp"
 
       - name: Print contents of publish directory
         run: |
-          echo "Listing contents of D:\\a\\dotnetcore-docs-hello-world\\dotnetcore-docs-hello-world\\myapp:"
-          dir D:\a\dotnetcore-docs-hello-world\dotnetcore-docs-hello-world\myapp || echo "Directory D:\\a\\dotnetcore-docs-hello-world\\dotnetcore-docs-hello-world\\myapp does not exist."
+          echo "Listing contents of ${{ runner.temp }}/myapp:"
+          dir ${{ runner.temp }}/myapp || echo "Directory ${{ runner.temp }}/myapp does not exist."
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: dotnet-app
-          path: D:\a\dotnetcore-docs-hello-world\dotnetcore-docs-hello-world\myapp
+          path: ${{ runner.temp }}/myapp
 
   deploy:
     runs-on: windows-latest
@@ -75,4 +71,4 @@ jobs:
         with:
           app-name: 'clipchampaiwebclientpoc'
           slot-name: 'Production'
-          package: D:\a\dotnetcore-docs-hello-world\dotnetcore-docs-hello-world
+          package: ${{ runner.temp }}/myapp
